@@ -1,25 +1,41 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import home from './home'
+import add from './add'
+import edit from './edit'
+
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <Router>
+            <nav className="MyNav navbar navbar-expand-lg" >
+            <Link to="/" className="nav--maintxt navbar-brand">MonsterFilme</Link>
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="Gold navbar-toggler-icon"><i className="material-icons">menu</i></span>
+                </button>
+                    <div className="collapse navbar-collapse" id="navbarText">
+                        <ul className="navbar-nav mr-auto">
+                            <li className="nav-item active">
+                              <Link to="/" className="Gold nav-link">Home</Link>
+                            </li>
+                            <li>
+                              <Link to="/add" className="Gold nav-link">Add</Link>
+                            </li>
+                       
+                        </ul>
+                        <span className="navbar-text" style={{color:"white"}}>
+                            Navbar text with an inline element
+                        </span>
+                    </div>
+            </nav>
+            <Route path="/" exact component={home} />
+            <Route path="/add" exact component={add} />
+            <Route path="/edit/:id" exact component={edit} />
+
+      </Router>      
       </div>
     );
   }
