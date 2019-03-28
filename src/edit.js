@@ -11,8 +11,8 @@ class edit extends Component{
     constructor(props) {
         super(props);
         this.state = {data:[],rating:"Please Choose rating",warn: "alert alert-info",
-        title:"",director:"",rightbtn:"",leftbtn:"", redirectToHome: false,
-        description:""
+        title:"",director:"",rightbtn:"",leftbtn:"", redirectToHome: false,status:"",
+        description:"",titlefel:""
     };
     this.moviesID = props.match.params.id
     this.onSubmit = this.onSubmit.bind(this)
@@ -39,7 +39,11 @@ class edit extends Component{
         console.log(this.moviesID)
         axios.get("http://ec2-13-53-132-57.eu-north-1.compute.amazonaws.com:3000/movies/"+this.props.match.params.id)
         .then((response)=>{
+            if(response.status === 200){this.setState({titlefel:"Thank you for your changes"})}
+            if(response.status === 404){this.setState({titlefel:"This film dose not exist "})}
+            if(response.status === 400){this.setState({titlefel:"You have entered wrong data"})}
             console.log(response)
+            this.setState({status:response.status})
             this.setState({title:response.data.title})
             this.setState({description:response.data.description,director:response.data.director,rating:response.data.rating})
         })
@@ -95,7 +99,7 @@ class edit extends Component{
               </button>
             </div>
             <div className="modal-body">
-            Thank you for your changes
+            {this.state.titlefel}
             </div>
             <div className="modal-footer">
               <button type="button" onClick={this.rightbtnclick} className="btn btn-primary">Go back home</button>

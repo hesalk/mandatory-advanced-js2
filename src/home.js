@@ -27,7 +27,12 @@ class home extends Component{
     }
     delete(movieid){
         axios.delete("http://ec2-13-53-132-57.eu-north-1.compute.amazonaws.com:3000/movies/"+movieid)
-        .then(()=>{this.get()})
+        .then((x)=>{
+            console.log(x)
+            if(x.status === 204){alert("Successfuly deleted")}
+            if(x.status === 404)(alert("this fil, dose not exist"))
+            this.get()
+        })
         
     }
 

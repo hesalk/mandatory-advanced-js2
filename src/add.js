@@ -54,7 +54,13 @@ class add extends Component{
             "rating": this.state.rating
         }
         console.log(obj);
-        axios.post("http://ec2-13-53-132-57.eu-north-1.compute.amazonaws.com:3000/movies",obj);
+        axios.post("http://ec2-13-53-132-57.eu-north-1.compute.amazonaws.com:3000/movies",obj)
+        .then((x)=>{
+            console.log(x.status);
+            if(x.status === 201){this.setState({titlefel:"Your film has successfuly created"})}
+            if(x.status === 400){this.setState({titlefel:"You entered wrong data"})}
+
+        })
         e.target.reset()
         this.setState({rating:'Pleas enter rating',warn:'alert alert-info'})
         e.preventDefault()

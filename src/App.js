@@ -30,7 +30,7 @@ class App extends Component {
                        
                         </ul>
                         <span className="navbar-text" style={{color:"white"}}>
-                            Navbar text with an inline element
+                            Welcome to Monster Film library 
                         </span>
                     </div>
             </nav>
