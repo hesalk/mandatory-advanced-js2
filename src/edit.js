@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect } from "react-router-dom";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import $ from "jquery";
+import {Helmet} from "react-helmet";
 
 
 
@@ -10,22 +11,29 @@ class edit extends Component{
     constructor(props) {
         super(props);
         this.state = {data:[],rating:"Please Choose rating",warn: "alert alert-info",
-        titlefel:"tes",title:"",directorfel:"",director:"",rightbtn:"",leftbtn:"", redirectToHome: false,
+        title:"",director:"",rightbtn:"",leftbtn:"", redirectToHome: false,
         description:""
     };
     this.moviesID = props.match.params.id
     this.onSubmit = this.onSubmit.bind(this)
-
+    this.modalRef = React.createRef();
+    this.rightbtnclick = this.rightbtnclick.bind(this)
         console.log(props.match.params.id);
     }
-    onSubmit(){
+    onSubmit(e){
         let obj = {
             "title": this.state.title,
             "director": this.state.director,
             "description": this.state.description,
             "rating": this.state.rating            
         }
-        axios.put("http://ec2-13-53-132-57.eu-north-1.compute.amazonaws.com:3000/movies/"+this.props.match.params.id,obj)
+        axios.put("http://ec2-13-53-132-57.eu-north-1.compute.amazonaws.com:3000/movies/"+this.props.match.params.id,obj);
+        $(this.modalRef.current).modal();
+        e.preventDefault()
+    }
+    rightbtnclick(){
+        this.setState({redirectToHome:true});
+        $(this.modalRef.current).modal("hide");
     }
     componentDidMount(){
         console.log(this.moviesID)
@@ -38,9 +46,14 @@ class edit extends Component{
     }
 
     render(){
+        if(this.state.redirectToHome){return <Redirect to="/" />;}
         return(
-            
+            <>
             <div className="main--container">
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Edit Film</title>
+            </Helmet>            
             <form onSubmit={this.onSubmit}>
                 <div className="form-row">
                     <div className="form-group col-md-6">
@@ -72,6 +85,25 @@ class edit extends Component{
                 </div>
             </form>
         </div>
+        <div data-backdrop="static" className="modal fade" ref={this.modalRef} id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-show="true" aria-hidden="true">
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+            Thank you for your changes
+            </div>
+            <div className="modal-footer">
+              <button type="button" onClick={this.rightbtnclick} className="btn btn-primary">Go back home</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </>
         )
     }
 }

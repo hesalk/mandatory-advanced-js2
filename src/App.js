@@ -4,6 +4,9 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import home from './home'
 import add from './add'
 import edit from './edit'
+import description from './description'
+import {Helmet} from "react-helmet";
+
 
 
 class App extends Component {
@@ -34,6 +37,7 @@ class App extends Component {
             <Route path="/" exact component={home} />
             <Route path="/add" exact component={add} />
             <Route path="/edit/:id" exact component={edit} />
+            <Route path="/description/:id" exact component={description} />
 
       </Router>      
       </div>

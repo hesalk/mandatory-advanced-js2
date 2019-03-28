@@ -3,6 +3,7 @@ import axios from 'axios';
 import StarRatings from 'react-star-ratings';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import edit from './edit'
+import {Helmet} from "react-helmet";
 
 
 class home extends Component{
@@ -33,6 +34,10 @@ class home extends Component{
     render(){
         return(
             <div className="main--container">
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>MonsterFilm-Home</title>
+            </Helmet>
             {this.state.data.map(x => 
                 <div className="main--filmcontainer animated fadeIn">
                 <h1 className="filmtext">{x.title}</h1>
@@ -48,6 +53,7 @@ class home extends Component{
                 </div>
                 <div className="main--icon">
                 <Link to={"/edit/"+x.id} className="Gold nav-link"><i className="fas fa-edit" /></Link>
+                <Link to={"/description/"+x.id} className="Gold nav-link"><i className="fas fa-info-circle" /></Link>
                 
                 </div>
             </div>)}

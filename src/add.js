@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import $ from "jquery";
 import axios from 'axios';
 import { Redirect } from "react-router-dom";
-require('bootstrap') 
+import {Helmet} from "react-helmet";
+
+require('bootstrap') ;
+
 class add extends Component{
     constructor(props) {
         super(props);
@@ -52,9 +55,6 @@ class add extends Component{
         }
         console.log(obj);
         axios.post("http://ec2-13-53-132-57.eu-north-1.compute.amazonaws.com:3000/movies",obj);
-        this.setState({done:true});
-        if(this.state.done){return <Redirect to="/modal" />}
-        console.log(this.state.done)
         e.target.reset()
         this.setState({rating:'Pleas enter rating',warn:'alert alert-info'})
         e.preventDefault()
@@ -67,6 +67,10 @@ class add extends Component{
         return(
             <>
             <div className="main--container">
+            <Helmet>
+            <meta charSet="utf-8" />
+                <title>Add Film</title>
+            </Helmet> 
                 <form onSubmit={this.onSubmit}>
                     <div className="form-row">
                         <div className="form-group col-md-6">
